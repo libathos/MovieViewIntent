@@ -64,6 +64,11 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
+
+            // Kamel – Compose Multiplatform image loading
+            implementation(libs.kamel.image)
+            implementation(libs.kamel.default)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -128,6 +133,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "compose.demo.movieviewintent"
             packageVersion = "1.0.0"
+            linux {
+                iconFile.set(project.file("composeApp/src/jvmMain/resources/mvi_app_icon.png"))
+            }
         }
     }
 }
