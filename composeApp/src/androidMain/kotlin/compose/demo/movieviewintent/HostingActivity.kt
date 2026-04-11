@@ -13,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import compose.demo.movieviewintent.presentation.listOfMovies.ListOfMoviesMainComposable
 import compose.demo.movieviewintent.presentation.listOfMovies.ListOfMoviesMainContent
 import compose.demo.movieviewintent.presentation.listOfMovies.MoviesListViewModel
+import compose.demo.movieviewintent.presentation.movieDetails.MovieDetailsMainComposable
+import compose.demo.movieviewintent.network.MovieDto
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,14 +29,30 @@ class MainActivity : ComponentActivity() {
                     ListOfMoviesMainContent(
                         state = vm.uiState,
                         onShow = vm::onShowContent,
-                        onLoadTopRated = { vm.loadTopRated() }
+                        onAction = { action ->
+                            when (action) {
+                                is MoviesListViewModel.Action.ViewMovieDetails -> {
+                                    // In the future, pass movieId as an argument.
+                                    navController.navigate("details")
+                                }
+                                else -> vm.onAction(action)
+                            }
+                        }
                     )
                 }
-                // Future destinations can be added here, e.g.:
-                // composable("details/{movieId}") { backStackEntry ->
-                //     val movieId = backStackEntry.arguments?.getString("movieId")
-                //     DetailsScreen(movieId = movieId)
-                // }
+
+                composable("details") {
+                    // Minimal placeholder movie to render the details screen
+                    val placeholder = MovieDto(
+                        original_title = "Sample Movie",
+                        poster_path = null,
+                        overview = "This is a placeholder overview shown for navigation demo."
+                    )
+                    MovieDetailsMainComposable(
+                        movie = placeholder,
+                        onBack = { navController.popBackStack() }
+                    )
+                }
             }
         }
     }

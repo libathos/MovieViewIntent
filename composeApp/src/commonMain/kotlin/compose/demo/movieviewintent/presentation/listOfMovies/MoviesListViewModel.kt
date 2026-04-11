@@ -25,6 +25,18 @@ class MoviesListViewModel(
     var uiState by mutableStateOf(UiState())
         private set
 
+    sealed interface Action {
+        object LoadTopRated : Action
+        data class ViewMovieDetails(val movieId: Int) : Action
+    }
+
+    fun onAction(action: Action) {
+        when (action) {
+            Action.LoadTopRated -> loadTopRated()
+            is Action.ViewMovieDetails -> Unit // No-op in VM; hosting layer handles navigation
+        }
+    }
+
     fun onShowContent() {
         if (!uiState.showContent) {
             uiState = uiState.copy(showContent = true)

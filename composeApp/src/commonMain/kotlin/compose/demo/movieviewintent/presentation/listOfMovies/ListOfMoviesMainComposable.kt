@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,7 @@ import io.kamel.image.asyncPainterResource
 fun ListOfMoviesMainContent(
     state: MoviesListViewModel.UiState,
     onShow: () -> Unit,
-    onLoadTopRated: () -> Unit,
+    onAction: (MoviesListViewModel.Action) -> Unit,
 ) {
     MaterialTheme {
         Column(
@@ -44,7 +45,7 @@ fun ListOfMoviesMainContent(
         ) {
             Button(onClick = {
                 onShow()
-                if (!state.isLoading) onLoadTopRated()
+                if (!state.isLoading) onAction(MoviesListViewModel.Action.LoadTopRated)
             }) {
                 Text(if (state.isLoading) "Loading..." else "Load Top Rated")
             }
@@ -57,7 +58,7 @@ fun ListOfMoviesMainContent(
                     Text("Compose: $greeting")
                     when {
                         state.error != null -> Text("Error: ${state.error}")
-                        state.movies.isNotEmpty() -> MoviesGrid(movies = state.movies)
+                        state.movies.isNotEmpty() -> MoviesGrid(movies = state.movies, onAction = onAction)
                         state.isLoading -> Text("Loading...")
                         else -> Text("Press the button to load Top Rated movies")
                     }
@@ -68,7 +69,10 @@ fun ListOfMoviesMainContent(
 }
 
 @Composable
-private fun MoviesGrid(movies: List<MovieDto>) {
+private fun MoviesGrid(
+    movies: List<MovieDto>,
+    onAction: (MoviesListViewModel.Action) -> Unit,
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
@@ -77,14 +81,21 @@ private fun MoviesGrid(movies: List<MovieDto>) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(movies) { movie ->
-            MovieCard(title = movie.original_title, posterPath = movie.poster_path)
+            MovieCard(
+                title = movie.original_title,
+                posterPath = movie.poster_path,
+                onClick = { onAction(MoviesListViewModel.Action.ViewMovieDetails(movie.id)) }
+            )
         }
     }
 }
 
 @Composable
-private fun MovieCard(title: String, posterPath: String?) {
-    Card(shape = RoundedCornerShape(16.dp)) {
+private fun MovieCard(title: String, posterPath: String?, onClick: () -> Unit = {}) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.clickable(onClick = onClick)
+    ) {
         Box(modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(0.72f)
@@ -161,7 +172,7 @@ fun ListOfMoviesMainComposable() {
     ListOfMoviesMainContent(
         state = vm.uiState,
         onShow = vm::onShowContent,
-        onLoadTopRated = { vm.loadTopRated() }
+        onAction = vm::onAction
     )
 }
 
