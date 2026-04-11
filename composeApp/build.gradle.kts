@@ -45,7 +45,6 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.navigation.compose)
             // Ktor engine for Android
             implementation(libs.ktor.client.okhttp)
         }
@@ -58,6 +57,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
 
             // Ktor core + features shared across all platforms
             implementation(libs.ktor.client.core)
