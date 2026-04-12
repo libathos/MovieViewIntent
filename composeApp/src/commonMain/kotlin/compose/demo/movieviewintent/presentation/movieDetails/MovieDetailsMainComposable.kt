@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import compose.demo.movieviewintent.network.MovieDto
 import io.kamel.image.KamelImage
@@ -52,10 +53,11 @@ fun MovieDetailsMainComposable(
     releaseDate: String? = null,  // e.g., "Oct 12, 2023"
     director: String? = null,
     cast: List<String> = emptyList(),
+    trailerKey: String? = null,   // YouTube video key
     onBack: () -> Unit = {},
     onShare: () -> Unit = {},
-    onWatchTrailer: () -> Unit = {},
 ) {
+    val uriHandler = LocalUriHandler.current
     val appBarColors = TopAppBarDefaults.topAppBarColors(
         containerColor = MaterialTheme.colorScheme.surface,
         titleContentColor = MaterialTheme.colorScheme.onSurface
@@ -102,7 +104,12 @@ fun MovieDetailsMainComposable(
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Button(
-                    onClick = onWatchTrailer,
+                    onClick = {
+                        if (trailerKey != null) {
+                            uriHandler.openUri("https://www.youtube.com/watch?v=$trailerKey")
+                        }
+                    },
+                    enabled = trailerKey != null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),

@@ -84,6 +84,7 @@ fun App() {
                             releaseDate = state.releaseDate,
                             director = state.director,
                             cast = state.cast,
+                            trailerKey = state.trailerKey,
                             onBack = { currentScreen = Screen.Home },
                         )
                     }
