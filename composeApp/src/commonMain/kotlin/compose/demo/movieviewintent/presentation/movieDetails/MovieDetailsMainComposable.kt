@@ -3,7 +3,6 @@ package compose.demo.movieviewintent.presentation.movieDetails
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -26,9 +25,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import compose.demo.movieviewintent.network.MovieDto
+import compose.demo.movieviewintent.presentation.icons.AppIcons
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlin.math.roundToInt
@@ -39,7 +41,7 @@ import kotlin.math.roundToInt
  * It mirrors the provided mock: Top app bar, big poster image, title, metadata row,
  * genre chips, overview section and a bottom primary action button.
  *
- * Kept icon usage to simple unicode symbols (←, ★, ▶) to avoid adding new icon dependencies.
+ * Uses Material Icons (ArrowBack, PlayArrow, etc.) for cross-platform compatibility.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,29 +71,13 @@ fun MovieDetailsMainComposable(
                 colors = appBarColors,
                 title = { Text("Movie Summary") },
                 navigationIcon = {
-                    // Text-based icon button to keep dependencies minimal
-                    Text(
-                        text = "←",
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .clip(CircleShape)
-                            .padding(4.dp)
-                            .noRippleClickable { onBack() },
-                        fontSize = 22.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                },
-                actions = {
-                    Text(
-                        text = "⇪",
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .clip(CircleShape)
-                            .padding(4.dp)
-                            .noRippleClickable { onShare() },
-                        fontSize = 18.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = AppIcons.ArrowBack,
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                 }
             )
         },
@@ -119,7 +105,13 @@ fun MovieDetailsMainComposable(
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
-                    Text("WATCH TRAILER  ▶")
+                    Text("WATCH TRAILER")
+                    Spacer(Modifier.width(8.dp))
+                    Icon(
+                        imageVector = AppIcons.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
                 }
             }
         }
@@ -190,7 +182,11 @@ fun MovieDetailsMainComposable(
                         Text("  |  ", color = subtitleColor)
                     }
                     if (rating != null) {
-                        Text("★ ${formatOneDecimal(rating)}", color = subtitleColor, fontSize = 13.sp)
+                        Text(
+                            "★ ${formatOneDecimal(rating)}",
+                            color = subtitleColor,
+                            fontSize = 13.sp
+                        )
                     }
                     if (votes != null) {
                         Text("  (${formatVotes(votes)})", color = subtitleColor, fontSize = 13.sp)
