@@ -17,6 +17,7 @@ kotlinx-coroutines = "1.10.2"
 material3 = "1.10.0-alpha05"
 ktor = "3.4.2"
 kamel = "1.0.9"
+koin = "4.2.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -47,6 +48,10 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 kamel-default = { module = "media.kamel:kamel-image-default", version.ref = "kamel" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

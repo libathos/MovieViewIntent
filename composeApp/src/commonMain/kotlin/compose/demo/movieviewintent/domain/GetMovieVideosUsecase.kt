@@ -8,7 +8,7 @@ import compose.demo.movieviewintent.network.MovieVideosDto
  *
  * Mirrors the operator-style API used by other use cases.
  */
-class GetMovieVideosUsecase {
+class GetMovieVideosUsecase(private val movieApi: MovieApi) {
     /**
      * Fetch movie videos by id.
      *
@@ -19,7 +19,7 @@ class GetMovieVideosUsecase {
     suspend operator fun invoke(
         movieId: Int,
         language: String = "en-US",
-    ): MovieVideosDto = MovieApi.getMovieVideos(
+    ): MovieVideosDto = movieApi.getMovieVideos(
         movieId = movieId,
         language = language
     )

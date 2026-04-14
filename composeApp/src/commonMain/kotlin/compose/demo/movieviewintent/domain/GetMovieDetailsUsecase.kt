@@ -9,7 +9,7 @@ import compose.demo.movieviewintent.network.MovieDetailsDto
  * Mirrors the style of [GetTopRatedMoviesUsecase] by exposing an operator-style API
  * so callers can simply invoke it like a function.
  */
-class GetMovieDetailsUsecase {
+class GetMovieDetailsUsecase(private val movieApi: MovieApi) {
     /**
      * Fetch movie details by id.
      *
@@ -20,7 +20,7 @@ class GetMovieDetailsUsecase {
     suspend operator fun invoke(
         movieId: Int,
         language: String = "en-US",
-    ): MovieDetailsDto = MovieApi.getMovieDetails(
+    ): MovieDetailsDto = movieApi.getMovieDetails(
         movieId = movieId,
         language = language
     )

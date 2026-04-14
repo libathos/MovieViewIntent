@@ -47,6 +47,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             // Ktor engine for Android
             implementation(libs.ktor.client.okhttp)
+            // Koin Android integration
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -68,6 +70,11 @@ kotlin {
             // Kamel – Compose Multiplatform image loading
             implementation(libs.kamel.image)
             implementation(libs.kamel.default)
+
+            // Koin – Dependency Injection
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
         }
         commonTest.dependencies {

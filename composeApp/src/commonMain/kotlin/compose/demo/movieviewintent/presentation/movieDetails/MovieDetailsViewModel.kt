@@ -12,9 +12,9 @@ import compose.demo.movieviewintent.network.MovieDto
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(
-    private val getMovieDetails: GetMovieDetailsUsecase = GetMovieDetailsUsecase(),
-    private val getMovieCredits: GetMovieCreditsUsecase = GetMovieCreditsUsecase(),
-    private val getMovieVideos: GetMovieVideosUsecase = GetMovieVideosUsecase(),
+    private val getMovieDetails: GetMovieDetailsUsecase,
+    private val getMovieCredits: GetMovieCreditsUsecase,
+    private val getMovieVideos: GetMovieVideosUsecase,
 ) : ViewModel() {
 
     data class UiState(

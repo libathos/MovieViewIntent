@@ -13,11 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import compose.demo.movieviewintent.presentation.listOfMovies.ListOfMoviesMainContent
 import compose.demo.movieviewintent.presentation.listOfMovies.MoviesListViewModel
 import compose.demo.movieviewintent.presentation.movieDetails.MovieDetailsMainComposable
 import compose.demo.movieviewintent.presentation.movieDetails.MovieDetailsViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * Simple sealed hierarchy representing navigation screens.
@@ -30,6 +30,9 @@ private sealed interface Screen {
 /**
  * Root composable shared by all platforms.
  * Uses simple state-based navigation – no external navigation library required.
+ *
+ * Koin is initialised by each platform entry-point via [initKoin] before
+ * composition starts.
  */
 @Composable
 fun App() {
@@ -38,7 +41,7 @@ fun App() {
     AnimatedContent(targetState = currentScreen) { screen ->
         when (screen) {
             is Screen.Home -> {
-                val vm: MoviesListViewModel = viewModel { MoviesListViewModel() }
+                val vm: MoviesListViewModel = koinViewModel()
                 ListOfMoviesMainContent(
                     state = vm.uiState,
                     onShow = vm::onShowContent,
@@ -54,9 +57,9 @@ fun App() {
             }
 
             is Screen.Details -> {
-                val vm: MovieDetailsViewModel = viewModel(
+                val vm: MovieDetailsViewModel = koinViewModel(
                     key = "details_${screen.movieId}"
-                ) { MovieDetailsViewModel() }
+                )
 
                 LaunchedEffect(screen.movieId) {
                     vm.loadMovie(screen.movieId)

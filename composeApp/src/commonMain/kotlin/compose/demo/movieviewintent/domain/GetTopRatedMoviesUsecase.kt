@@ -8,7 +8,7 @@ import compose.demo.movieviewintent.network.MovieResponse
  *
  * Provides a simple operator-style API so callers can invoke it like a function.
  */
-class GetTopRatedMoviesUsecase {
+class GetTopRatedMoviesUsecase(private val movieApi: MovieApi) {
     /**
      * Fetch Top Rated movies.
      *
@@ -20,7 +20,7 @@ class GetTopRatedMoviesUsecase {
     suspend operator fun invoke(
         page: Int,
         language: String = "en-US",
-    ): MovieResponse = MovieApi.getTopRatedMovies(
+    ): MovieResponse = movieApi.getTopRatedMovies(
         language = language,
         page = page
     )

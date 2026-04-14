@@ -8,7 +8,7 @@ import compose.demo.movieviewintent.network.MovieCreditsDto
  *
  * Mirrors the style of other use cases by providing an operator-style API.
  */
-class GetMovieCreditsUsecase {
+class GetMovieCreditsUsecase(private val movieApi: MovieApi) {
     /**
      * Fetch movie credits by id.
      *
@@ -19,7 +19,7 @@ class GetMovieCreditsUsecase {
     suspend operator fun invoke(
         movieId: Int,
         language: String = "en-US",
-    ): MovieCreditsDto = MovieApi.getMovieCredits(
+    ): MovieCreditsDto = movieApi.getMovieCredits(
         movieId = movieId,
         language = language
     )

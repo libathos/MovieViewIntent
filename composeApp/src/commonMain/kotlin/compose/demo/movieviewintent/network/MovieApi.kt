@@ -1,30 +1,29 @@
 package compose.demo.movieviewintent.network
 
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
- * Simple TMDB API wrapper using the shared Ktor [httpClient].
- * Base URL is configured in [SharedHttpClient].
+ * Simple TMDB API wrapper using the shared Ktor [HttpClient].
+ *
+ * Accepts [HttpClient] as a constructor parameter for dependency injection.
  */
-object MovieApi {
-    const val API_KEY = "e8d648003bd11b5c498674fbd4905525"
+class MovieApi(private val client: HttpClient) {
+    companion object {
+        const val API_KEY = "e8d648003bd11b5c498674fbd4905525"
+    }
 
     /**
      * Fetches the Top Rated movies from TMDB.
-     *
-     * Mirrors the Retrofit-style signature provided by the user, but returns the decoded body directly.
-     * Ktor throws an exception for non-2xx responses because `expectSuccess = true`.
      */
     suspend fun getTopRatedMovies(
         language: String = "en-US",
         page: Int
     ): MovieResponse {
-        return httpClient.get("movie/top_rated") {
+        return client.get("movie/top_rated") {
             parameter("api_key", API_KEY)
             parameter("language", language)
             parameter("page", page)
@@ -38,7 +37,7 @@ object MovieApi {
         movieId: Int,
         language: String = "en-US"
     ): MovieDetailsDto {
-        return httpClient.get("movie/$movieId") {
+        return client.get("movie/$movieId") {
             parameter("api_key", API_KEY)
             parameter("language", language)
         }.body()
@@ -51,7 +50,7 @@ object MovieApi {
         movieId: Int,
         language: String = "en-US"
     ): MovieCreditsDto {
-        return httpClient.get("movie/$movieId/credits") {
+        return client.get("movie/$movieId/credits") {
             parameter("api_key", API_KEY)
             parameter("language", language)
         }.body()
@@ -64,7 +63,7 @@ object MovieApi {
         movieId: Int,
         language: String = "en-US"
     ): MovieVideosDto {
-        return httpClient.get("movie/$movieId/videos") {
+        return client.get("movie/$movieId/videos") {
             parameter("api_key", API_KEY)
             parameter("language", language)
         }.body()

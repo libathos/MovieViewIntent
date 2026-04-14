@@ -10,7 +10,7 @@ import compose.demo.movieviewintent.network.MovieDto
 import kotlinx.coroutines.launch
 
 class MoviesListViewModel(
-    private val getTopRated: GetTopRatedMoviesUsecase = GetTopRatedMoviesUsecase()
+    private val getTopRated: GetTopRatedMoviesUsecase
 ) : ViewModel() {
 
     data class UiState(

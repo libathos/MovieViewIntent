@@ -168,11 +168,10 @@ private fun PosterPlaceholder() {
 @Composable
 @Preview
 fun ListOfMoviesMainComposable() {
-    val vm = remember { MoviesListViewModel() }
     ListOfMoviesMainContent(
-        state = vm.uiState,
-        onShow = vm::onShowContent,
-        onAction = vm::onAction
+        state = MoviesListViewModel.UiState(),
+        onShow = {},
+        onAction = {}
     )
 }
 
