@@ -28,7 +28,6 @@ import compose.demo.movieviewintent.network.MovieDto
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
-// Stateless UI that renders based on ViewModel state and triggers callbacks
 @Composable
 fun ListOfMoviesMainContent(
     state: MoviesListViewModel.UiState,
@@ -55,7 +54,7 @@ fun ListOfMoviesMainContent(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text("Compose: $greeting")
+                    Text("MVI running from: $greeting")
                     when {
                         state.error != null -> Text("Error: ${state.error}")
                         state.movies.isNotEmpty() -> MoviesGrid(movies = state.movies, onAction = onAction)
@@ -82,8 +81,8 @@ private fun MoviesGrid(
     ) {
         items(movies) { movie ->
             MovieCard(
-                title = movie.original_title,
-                posterPath = movie.poster_path,
+                title = movie.originalTitle,
+                posterPath = movie.posterPath,
                 onClick = { onAction(MoviesListViewModel.Action.ViewMovieDetails(movie.id)) }
             )
         }

@@ -58,7 +58,7 @@ class MoviesListViewModel(
                     uiState = uiState.copy(
                         isLoading = false,
                         moviesCount = resp.results.size,
-                        firstTitle = resp.results.firstOrNull()?.original_title,
+                        firstTitle = resp.results.firstOrNull()?.originalTitle,
                         movies = resp.results
                     )
                 }

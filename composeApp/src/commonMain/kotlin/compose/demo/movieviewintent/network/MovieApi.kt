@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -78,11 +79,10 @@ data class MovieResponse(
 
 @Serializable
  data class MovieDto(
-     // TMDB payload fields
-     val id: Int = -1,
-     val original_title: String,
-     val poster_path: String? = null,
-     val overview: String
+    val id: Int = -1,
+    @SerialName("original_title") val originalTitle: String,
+    @SerialName("poster_path") val posterPath: String? = null,
+    val overview: String
  )
 
 @Serializable
@@ -94,13 +94,13 @@ data class Genre(
 @Serializable
 data class MovieDetailsDto(
     val id: Int,
-    val original_title: String,
-    val poster_path: String? = null,
+    @SerialName("original_title") val originalTitle: String,
+    @SerialName("poster_path") val posterPath: String? = null,
     val overview: String = "",
     val runtime: Int? = null,
-    val vote_average: Double? = null,
-    val vote_count: Int? = null,
-    val release_date: String? = null,
+    @SerialName("vote_average") val voteAverage: Double? = null,
+    @SerialName("vote_count" )val voteCount: Int? = null,
+    @SerialName("release_date") val releaseDate: String? = null,
     val genres: List<Genre>? = null
 )
 
@@ -109,22 +109,22 @@ data class MovieDetailsDto(
 data class CastDto(
     val id: Int,
     val name: String,
-    val original_name: String? = null,
+    @SerialName("original_name") val originalName: String? = null,
     val character: String? = null,
-    val profile_path: String? = null,
+    @SerialName("profile_path") val profilePath: String? = null,
     val order: Int? = null,
-    val credit_id: String? = null
+    @SerialName("credit_id") val creditId: String? = null
 )
 
 @Serializable
 data class CrewDto(
     val id: Int,
     val name: String,
-    val original_name: String? = null,
+    @SerialName("original_name") val originalName: String? = null,
     val job: String? = null,
     val department: String? = null,
-    val profile_path: String? = null,
-    val credit_id: String? = null
+    @SerialName("profile_path") val profilePath: String? = null,
+    @SerialName("credit_id") val creditId: String? = null
 )
 
 @Serializable
@@ -144,9 +144,9 @@ data class VideoDto(
     val size: Int? = null,     // e.g., 1080
     val type: String? = null,  // e.g., "Trailer", "Teaser"
     val official: Boolean? = null,
-    val published_at: String? = null,
-    val iso_639_1: String? = null,
-    val iso_3166_1: String? = null
+    @SerialName("published_at") val publishedAt: String? = null,
+    @SerialName("iso_639_1") val iso6391: String? = null,
+    @SerialName("iso_3166_1") val iso31661: String? = null
 )
 
 @Serializable

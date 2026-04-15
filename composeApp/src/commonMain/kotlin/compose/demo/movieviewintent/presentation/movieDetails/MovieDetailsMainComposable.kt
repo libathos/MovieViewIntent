@@ -36,7 +36,7 @@ import io.kamel.image.asyncPainterResource
 import kotlin.math.roundToInt
 
 /**
- * High‑level composable for Movie Details screen (commonMain).
+ * High‑level composable for Movie Details screen.
  *
  * It mirrors the provided mock: Top app bar, big poster image, title, metadata row,
  * genre chips, overview section and a bottom primary action button.
@@ -129,12 +129,12 @@ fun MovieDetailsMainComposable(
                     .height(260.dp)
                     .background(MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                val posterPath = movie.poster_path
+                val posterPath = movie.posterPath
                 if (posterPath != null) {
                     val imageUrl = "https://image.tmdb.org/t/p/w780$posterPath"
                     KamelImage(
                         resource = { asyncPainterResource(imageUrl) },
-                        contentDescription = movie.original_title,
+                        contentDescription = movie.originalTitle,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize(),
                         onFailure = {
@@ -153,7 +153,7 @@ fun MovieDetailsMainComposable(
             ) {
                 // Title
                 Text(
-                    text = movie.original_title,
+                    text = movie.originalTitle,
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
@@ -283,8 +283,8 @@ private fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier =
 @Composable
 private fun MovieDetailsPreview() {
     val sample = MovieDto(
-        original_title = "THE ETERNAL PATH",
-        poster_path = "/t6ESh4ExAMPLEPoster.jpg", // fake path; image loader will likely fail gracefully
+        originalTitle = "THE ETERNAL PATH",
+        posterPath = "/t6ESh4ExAMPLEPoster.jpg", // fake path; image loader will likely fail gracefully
         overview = "In a future where humanity struggles on a dying Earth, an explorer discovers an ancient artifact that offers a chance at redemption. Dr. Elena Vance leads a team through a dangerous rift to an unknown world, uncovering secrets that could change the universe's fate—or destroy it."
     )
     MovieDetailsMainComposable(

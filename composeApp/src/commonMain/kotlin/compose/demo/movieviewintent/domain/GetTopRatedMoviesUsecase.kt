@@ -12,7 +12,6 @@ class GetTopRatedMoviesUsecase(private val movieApi: MovieApi) {
     /**
      * Fetch Top Rated movies.
      *
-     * @param apiKey TMDB API key
      * @param page   1-based page index
      * @param language ISO language (default "en-US")
      * @return [MovieResponse] containing page info and list of movies
