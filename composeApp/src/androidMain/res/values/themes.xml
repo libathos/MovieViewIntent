@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash screen theme applied at launch -->
+    <style name="Theme.MovieViewIntent.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.MovieViewIntent</item>
+    </style>
+
+    <!-- Main app theme -->
+    <style name="Theme.MovieViewIntent" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
+

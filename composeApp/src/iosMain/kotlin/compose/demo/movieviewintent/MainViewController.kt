@@ -6,5 +6,7 @@ import platform.UIKit.UIViewController
 
 fun MainViewController(): UIViewController {
     initKoin()
-    return ComposeUIViewController { App() }
+    return ComposeUIViewController { App() }.apply {
+        view.backgroundColor = platform.UIKit.UIColor.whiteColor
+    }
 }

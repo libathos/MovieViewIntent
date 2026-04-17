@@ -45,6 +45,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.splashscreen)
             // Ktor engine for Android
             implementation(libs.ktor.client.okhttp)
             // Koin Android integration
